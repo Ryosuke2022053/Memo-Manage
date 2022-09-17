@@ -5,14 +5,21 @@ Copyright (C) 2022 Yasuhiro Hayashi
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for
 
 from flaskdb import apps, db, da
-from flaskdb.model.models import User
+from flaskdb.model.models import User, Item
+from flaskdb.service.ItemForm import AddItemForm
+import os, glob
 
 app = Blueprint("app", __name__)
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    current_dir = os.getcwd()
+    mdfile = os.path.join(current_dir,'flaskdb','controller','view', 'article')
+    mdfiles = os.listdir(mdfile)
+    mdfile_list = sorted(mdfiles)
+
+    return render_template("index.html", mdfiles = mdfile_list)
 
 # This is a very danger method
 @app.route("/receive", methods=["GET", "POST"])

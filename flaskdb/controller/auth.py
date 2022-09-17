@@ -26,11 +26,11 @@ def login():
         session["username"] = user.username
         return redirect(url_for("app.index"))
 
-    return render_template("login.html", form=form)
+    return render_template("auth/login.html", form=form)
 
 @auth_module.route("/logout", methods=["GET", "POST"])
 def logout():
     session.pop("username", None)
     session.clear()
     flash("You have been logged out.", "info")
-    return redirect(url_for("app.index"))
+    return redirect(url_for("auth/app.index"))
