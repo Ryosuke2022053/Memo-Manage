@@ -12,6 +12,8 @@ flask-sqlalchemy = "*"
 flask-wtf = "*"
 flask-bootstrap = "*"
 markdown = "*"
+flask-easymde = "*"
+flask-markdown = "*"
 
 [dev-packages]
 
