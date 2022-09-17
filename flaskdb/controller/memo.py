@@ -20,9 +20,8 @@ def memo_view(file):
 def memo_edit(file):
     content = read_edit_md(file)
     if request.method == "POST":
-      content = request.form["data"]
-      print(content)
-      write_md(content)
+      content = request.form["data"]    
+      write_md(content, file)
       return render_template("memo/memo_edit.html", data=content, file=file)
     else:
         return render_template("memo/memo_edit.html", data=content, file=file)
