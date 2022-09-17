@@ -23,11 +23,11 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         {% if not "username" in session %}
-        <li><a href="{{ url_for('app.login') }}">Login</a></li>
+        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
         {% else %}
-        <li><a href="{{ url_for('app.additem') }}">Add Item</a></li>
-        <li><a href="{{ url_for('app.searchitem') }}">Search Item</a></li>
-        <li><a href="{{ url_for('app.logout') }}">Logout</a></li>
+        <li><a href="{{ url_for('item.additem') }}">Add Item</a></li>
+        <li><a href="{{ url_for('item.searchitem') }}">Search Item</a></li>
+        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
         {% endif %}
       </ul>
     </div>

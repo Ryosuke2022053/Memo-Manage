@@ -4,7 +4,7 @@ Copyright (C) 2022 Yasuhiro Hayashi
 """
 from psycopg2 import sql, connect, ProgrammingError
 import flaskdb.var as v
-from flaskdb.models import Item
+from flaskdb.model.models import Item
 
 class DataAccess:
 
