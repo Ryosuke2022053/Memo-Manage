@@ -26,7 +26,7 @@ def additem():
         return redirect(url_for("item.additem"))
 
     itemlist = Item.query.all()
-    return render_template("additem.html", form=form, itemlist=itemlist)
+    return render_template("item/additem.html", form=form, itemlist=itemlist)
 
 @item_module.route("/searchitem", methods=["GET", "POST"])
 def searchitem():
@@ -38,7 +38,7 @@ def searchitem():
 
     if form.validate_on_submit():
         itemlist = Item.query.filter(Item.itemname.like("%" + form.itemname.data + "%")).all()
-        return render_template("search.html", form=form, itemlist=itemlist)
+        return render_template("item/search.html", form=form, itemlist=itemlist)
 
         # For change to PRG
         # itemlist = pickle.dumps(itemlist)
@@ -54,4 +54,4 @@ def searchitem():
     #
     # return render_template("search.html", form=form, itemlist=itemlist)
 
-    return render_template("search.html", form=form)
+    return render_template("item/search.html", form=form)

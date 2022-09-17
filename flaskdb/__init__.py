@@ -20,11 +20,20 @@ csrf.init_app(apps)
 from flask_bootstrap import Bootstrap
 bs = Bootstrap(apps)
 
+
+from flask_easymde import EasyMDE
+from flaskext.markdown import Markdown
+apps.config["EasyMDE_JS_IIFE"] = True
+apps.config["EasyMDE_USE_CDN"] = True
+EasyMDE(apps)
+Markdown(apps, extensions=["nl2br", "fenced_code"])
+
 from flaskdb.controller.views import app
 from flaskdb.controller.auth import auth_module
 from flaskdb.controller.item import item_module
+from flaskdb.controller.memo import memo_module
 
 apps.register_blueprint(app)
 apps.register_blueprint(auth_module)
 apps.register_blueprint(item_module)
-
+apps.register_blueprint(memo_module)
