@@ -3,19 +3,16 @@ A Sample Web-DB Application for DB-DESIGN lecture
 Copyright (C) 2022 Yasuhiro Hayashi
 """
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for
-import datetime
-import pickle
 
 from flaskdb import apps, db, da
-from flaskdb.models import User, Item
-from flaskdb.forms import LoginForm, AddItemForm, SearchItemForm
+from flaskdb.model.models import User
 
 app = Blueprint("app", __name__)
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("/index.html")
+    return render_template("index.html")
 
 # This is a very danger method
 @app.route("/receive", methods=["GET", "POST"])
