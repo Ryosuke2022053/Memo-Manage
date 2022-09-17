@@ -11,6 +11,7 @@ markupsafe = "*"
 flask-sqlalchemy = "*"
 flask-wtf = "*"
 flask-bootstrap = "*"
+markdown = "*"
 
 [dev-packages]
 

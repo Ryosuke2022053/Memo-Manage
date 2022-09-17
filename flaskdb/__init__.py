@@ -23,8 +23,9 @@ bs = Bootstrap(apps)
 from flaskdb.controller.views import app
 from flaskdb.controller.auth import auth_module
 from flaskdb.controller.item import item_module
+from flaskdb.controller.memo import memo_module
 
 apps.register_blueprint(app)
 apps.register_blueprint(auth_module)
 apps.register_blueprint(item_module)
-
+apps.register_blueprint(memo_module)
