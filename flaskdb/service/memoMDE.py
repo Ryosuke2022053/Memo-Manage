@@ -2,13 +2,13 @@ from flask import Markup
 from markdown import markdown
 
 
-def write_md(data):
-  with open('./article/main.md', mode='w') as mdfile:
+def write_md(data, mdfile):
+  with open('flaskdb/controller/view/article/' + mdfile, mode='w') as mdfile:
     mdfile.write(data)
 
 
-def add_md(data):
-  with open('./article/add.md', mode='w') as mdfile:
+def add_md(data, mdfile):
+  with open('flaskdb/controller/view/article/' + mdfile, mode='w') as mdfile:
     mdfile.write(data)
 
 

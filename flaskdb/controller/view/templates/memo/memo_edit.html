@@ -70,6 +70,7 @@
 
     <!-- Markdown Editor -->
     <form action="{{ url_for('memo.memo_edit', file=file) }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <div>
             <label for="content">Content</label>
             <textarea type="text" name="data" id="data">{% if data %}{{ data }}{% endif %}</textarea>
