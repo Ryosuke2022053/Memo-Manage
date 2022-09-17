@@ -3,7 +3,7 @@
 {% block head %}
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>flaskdb | Add Item</title>
+  <title>flaskdb | Index</title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="/static/css/flaskdb.css" rel="stylesheet">
   <!-- A Sample Web-DB Application for DB-DESIGN lecture -->
@@ -25,11 +25,11 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         {% if not "username" in session %}
-        <li><a href="{{ url_for('app.login') }}">Login</a></li>
+        <li><a href="{{ url_for('.login') }}">Login</a></li>
         {% else %}
-        <li><a href="{{ url_for('app.additem') }}">Add Item</a></li>
-        <li><a href="{{ url_for('app.searchitem') }}">Search Item</a></li>
-        <li><a href="{{ url_for('app.logout') }}">Logout</a></li>
+        <li><a href="{{ url_for('item.additem') }}">Add Item</a></li>
+        <li><a href="{{ url_for('item.searchitem') }}">Search Item</a></li>
+        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
         {% endif %}
       </ul>
     </div>
@@ -39,7 +39,7 @@
 
 {% block content %}
 <div class="container">
-  <div class="page-header"><h1>Add Item</h1></div>
+  <div class="page-header"><h1>Login</h1></div>
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
@@ -54,41 +54,19 @@
       {% endfor %}
     {% endfor %}
   {% endif %}
-  <form action="{{ url_for('app.additem') }}" method="POST" novalidate class="mb-10">
+  <form action="{{ url_for('auth.login') }}" method="POST" novalidate class="mb-10">
     <div class="form-group">
-      <label for="itemname">{{ form.itemname.label }}</label>
-      {{ form.itemname(type="text", id="itemname", class="form-control", placeholder="Enter item name") }}
+      <label for="username">{{ form.username.label }}</label>
+      {{ form.username(type="text", id="username", class="form-control", placeholder="Enter your username") }}
     </div>
     <div class="form-group">
-      <label for="price">{{ form.price.label }}</label>
-      {{ form.price(type="text", id="price", class="form-control", placeholder="Enter price") }}
+      <label for="password">{{ form.password.label }}</label>
+      {{ form.password(type="password", id="password", class="form-control", placeholder="Enter your password") }}
     </div>
     {{ form.csrf_token }}
     {{ form.cancel(class="btn") }}
     {{ form.submit(class="btn btn-primary") }}
   </form>
-  {% if itemlist %}
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">User ID</th>
-        <th scope="col">Item Name</th>
-        <th scope="col">Price</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for item in itemlist %}
-        <tr>
-          <th scope="row">{{ item.id }}</th>
-          <td>{{ item.user_id }}</td>
-          <td>{{ item.itemname }}</td>
-          <td>{{ item.price }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  {% endif %}
 </div>
 {% endblock %}
 
