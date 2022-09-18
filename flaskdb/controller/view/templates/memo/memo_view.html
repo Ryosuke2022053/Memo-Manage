@@ -45,7 +45,8 @@
       <div class="view_btn">
         <a class="btn btn-default" href="{{ url_for('memo.memo_add', file=file) }}">add</a>
         <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=file) }}">edit</a>
-        <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=file) }}">delete</a>
+        <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=file) }}"
+        onclick="return confirm('削除します。よろしいですか？')">delete</a>
         <a class="btn btn-default" href="{{ url_for('app.index') }}">home</a> 
       </div>   
     </div>
