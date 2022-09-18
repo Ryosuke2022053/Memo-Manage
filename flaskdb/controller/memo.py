@@ -44,7 +44,7 @@ def memo_add():
         if title in mdfile_list:
             return render_template("memo/memo_add.html", data=content, file="", errortext = True)
         memo_MDE(title).write_md(content)
-        return render_template("memo/memo_add.html", data=content, file=title)
+        return redirect(url_for("app.index"))
     else:
         return render_template("memo/memo_add.html", file="")
 
