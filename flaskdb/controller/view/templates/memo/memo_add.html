@@ -70,11 +70,14 @@
     <!-- Markdown Editor -->
     <form action="{{ url_for('memo.memo_add') }}" method="post" class="markdown_editor">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        {% if errortext %}
+          <p>ファイル名が重複しています。<br>まだ保存されていません。</p>
+        {% endif %}
         <div>
-            <label for="content">File Name</label>
-            <input type="text" name="title" value="{{ file }}">
-            <textarea type="text" name="data" id="data">{% if data %}{{ data }}{% endif %}</textarea>
-            {{ easymde.load_id("data") }}
+          <label for="content">File Name</label>
+          <input type="text" name="title" value="{{ file }}">
+          <textarea type="text" name="data" id="data">{% if data %}{{ data }}{% endif %}</textarea>
+          {{ easymde.load_id("data") }}
         </div>
         <button type="submit">Post</button>
     </form>
