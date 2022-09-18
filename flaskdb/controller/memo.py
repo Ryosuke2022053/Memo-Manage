@@ -1,11 +1,7 @@
-from crypt import methods
-from operator import methodcaller
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for, Markup
 
 from flaskdb import apps, db, da
-from flaskdb.model.models import User
-from flaskdb.service.memoMDE import write_md, add_md, read_md, read_edit_md
-from markdown import markdown
+from flaskdb.service.memoMDE import delete_md, write_md, read_md, read_edit_md
 
 memo_module = Blueprint("memo", __name__)
 
@@ -14,7 +10,8 @@ memo_module = Blueprint("memo", __name__)
 def memo_view(file):
     content = read_md(file)
     print(file)
-    return render_template('memo/memo_view.html', md=content)
+    return render_template('memo/memo_view.html', md=content, file=file)
+
 
 @memo_module.route("/edit/<string:file>", methods=["GET", "POST"])
 def memo_edit(file):
@@ -26,3 +23,18 @@ def memo_edit(file):
     else:
         return render_template("memo/memo_edit.html", data=content, file=file)
 
+
+@memo_module.route("/add", methods=["GET", "POST"])
+def memo_add():
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["data"]    
+        write_md(content, title)
+        return render_template("memo/memo_add.html", data=content, file=title)
+    else:
+        return render_template("memo/memo_add.html", file="")
+
+@memo_module.route("/delete/<string:file>", methods=["GET"])
+def memo_delete(file):
+    delete_md(file)
+    return redirect(url_for("app.index"))
