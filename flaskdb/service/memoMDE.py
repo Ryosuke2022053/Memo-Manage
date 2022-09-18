@@ -1,8 +1,7 @@
-from flask import Markup
+from flask import Markup, session
 from markdown import markdown
 import os
-from flaskdb.controller.auth import now
-from flaskdb.service.mainForm import file_name_list, now_dir
+from flaskdb.service.mainService import file_name_list, now_dir
 
 class memo_MDE:
   mdfile = None
@@ -26,13 +25,3 @@ class memo_MDE:
   
   def delete_md(self):
     os.remove(now_dir() + '/' + self.mdfile + '.md')
-
-
-  def check_file(self):
-    mdfile_list = file_name_list()
-    if self.mdfile in mdfile_list:
-      print('重複')
-      return True
-    else:
-      print('重複してない')
-      return False
