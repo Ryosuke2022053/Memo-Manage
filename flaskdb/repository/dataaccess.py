@@ -4,7 +4,9 @@ Copyright (C) 2022 Yasuhiro Hayashi
 """
 from psycopg2 import sql, connect, ProgrammingError
 import flaskdb.var as v
-from flaskdb.model.models import Item
+from flaskdb.model.itemModel import Item
+# from flaskdb.model.memoModel import Memo
+
 
 class DataAccess:
 
@@ -86,3 +88,20 @@ class DataAccess:
             ])
         )
         self.execute(query, autocommit=True)
+    
+    def insert_memo(self, memo):
+        query = sql.SQL("""
+            INSERT INTO \"files\" ( {fields} ) VALUES ( {values} )
+        """).format(
+            tablename = sql.Identifier("files"),
+            fields = sql.SQL(", ").join([
+                sql.Identifier("file_name"),
+                sql.Identifier("share")
+            ]),
+            values = sql.SQL(", ").join([
+                sql.Literal(memo.file_name),
+                sql.Literal(memo.share)
+            ])
+        )
+        self.execute(query, autocommit=True)
+

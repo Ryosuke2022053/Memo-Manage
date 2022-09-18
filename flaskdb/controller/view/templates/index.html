@@ -84,6 +84,7 @@
                   <section name="sel">
                     <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile) }}">view</a>
                     <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile) }}">edit</a>
+                    <a class="btn btn-default" href="{{ url_for('memo.memo_share', file=mdfile) }}">share</a>
                     <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=mdfile) }}"
                     onclick="return confirm('削除します。よろしいですか？')" >delete</a>
                   </section>

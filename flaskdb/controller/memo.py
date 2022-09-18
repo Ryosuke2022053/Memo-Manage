@@ -1,9 +1,13 @@
+from crypt import methods
 from turtle import title
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for, Markup
 
 from flaskdb import apps, db, da
+from flaskdb.model.userModel import User
 from flaskdb.service.memoMDE import memo_MDE
-from flaskdb.service.mainForm import file_rename, file_name_list
+from flaskdb.model.memoModel import Memo
+from flaskdb.service.mainService import file_rename, file_name_list
+from flaskdb.service.memoService import insert_memo
 
 memo_module = Blueprint("memo", __name__)
 
@@ -54,3 +58,11 @@ def memo_delete(file):
     memo_MDE(file).delete_md()
     return redirect(url_for("app.index"))
 
+@memo_module.route("/share/<string:file>", methods=["GET"])
+def memo_share(file):
+    if not "username" in session:
+        return redirect(url_for("auth:login"))
+    user = User.query.filter_by(username=session["username"]).first()
+    insert_memo(file, user.id)
+    return redirect(url_for("app.index"))
+    
