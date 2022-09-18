@@ -48,7 +48,14 @@
 
 {% block content %}
 <div class="container">
-  <div class="page-header"><h1>Notes</h1></div>
+  <div class="page-header index_main">
+    <h1>Notes</h1>
+    <div class="btn-group" role="group">
+      <div class="index_btn">
+        <a class="btn btn-default" href="{{ url_for('memo.memo_add') }}">add</a>            
+      </div>            
+    </div> 
+  </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
