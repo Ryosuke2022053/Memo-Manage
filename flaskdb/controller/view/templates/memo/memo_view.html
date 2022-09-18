@@ -40,13 +40,14 @@
 {% block content %}
 <div class="container">
   <div class="page-header view_main">
-    <h1>Memo</h1>
+    <h1>View</h1>
     <div class="btn-group" role="group">
       <div class="view_btn">
+        <a class="btn btn-default" href="{{ url_for('memo.memo_add', file=file) }}">add</a>
         <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=file) }}">edit</a>
-        <a class="btn btn-default" href="/">return</a>
-        <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=file) }}">delete</a> 
-      </div>     
+        <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=file) }}">delete</a>
+        <a class="btn btn-default" href="{{ url_for('app.index') }}">home</a> 
+      </div>   
     </div>
   </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
@@ -64,7 +65,9 @@
     {% endfor %}
   {% endif %}
 
+
   {% if md %}
+  <h2>{{ file }}</h2>
   {{ md }}
   
   {% endif %}

@@ -50,11 +50,13 @@
 <div class="container">
   <div class="page-header index_main">
     <h1>Notes</h1>
+    {% if "username" in session %}
     <div class="btn-group" role="group">
       <div class="index_btn">
         <a class="btn btn-default" href="{{ url_for('memo.memo_add') }}">add</a>            
       </div>            
-    </div> 
+    </div>
+    {% endif %}
   </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -82,8 +84,9 @@
                   <section name="sel">
                     <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile) }}">view</a>
                     <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile) }}">edit</a>
-                    <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=mdfile) }}">delete</a>
-                  </section>                
+                    <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=mdfile) }}"
+                    onclick="return confirm('削除します。よろしいですか？')" >delete</a>
+                  </section>
                 </div>
             </div>
         </form>
