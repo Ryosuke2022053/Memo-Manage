@@ -33,4 +33,4 @@ def logout():
     session.pop("username", None)
     session.clear()
     flash("You have been logged out.", "info")
-    return redirect(url_for("auth/app.index"))
+    return redirect(url_for("app.index"))

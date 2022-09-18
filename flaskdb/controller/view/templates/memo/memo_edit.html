@@ -58,21 +58,19 @@
     {% endfor %}
   {% endif %}
 
-  <div>
+  <div class="edit_main">
     <!-- Markdown Content -->
-    <div>
+    <div class = "markdown_content">
         {% if data %}
             {{ data|markdown }}
         {% endif %}
     </div>
-    
-    <div style="margin: 1rem 0rem; border-bottom: 1px solid black;"></div>
-
     <!-- Markdown Editor -->
-    <form action="{{ url_for('memo.memo_edit', file=file) }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <form action="{{ url_for('memo.memo_edit', file=file) }}" method="post" class="markdown_editor">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <div>
             <label for="content">Content</label>
+            <input type="text" name="title" value="{{ file }}">
             <textarea type="text" name="data" id="data">{% if data %}{{ data }}{% endif %}</textarea>
             {{ easymde.load_id("data") }}
         </div>
