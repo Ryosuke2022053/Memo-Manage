@@ -1,8 +1,9 @@
 from flask import Blueprint, session, render_template, redirect, flash, url_for
 from flaskdb import db
 
-from flaskdb.model.models import Item, User
-from flaskdb.service.ItemForm import AddItemForm, SearchItemForm
+from flaskdb.model.itemModel import Item
+from flaskdb.model.userModel import User
+from flaskdb.controller.form.ItemForm import AddItemForm, SearchItemForm
 
 item_module = Blueprint("item", __name__)
 

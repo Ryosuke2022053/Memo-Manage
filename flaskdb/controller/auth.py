@@ -1,8 +1,8 @@
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for
 from flaskdb import apps, db, da
 import datetime
-from flaskdb.model.models import User
-from flaskdb.service.LoginForm import LoginForm
+from flaskdb.model.userModel import User
+from flaskdb.controller.form.LoginForm import LoginForm
 
 auth_module = Blueprint("auth", __name__)
 
