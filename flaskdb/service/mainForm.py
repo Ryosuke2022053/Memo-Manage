@@ -14,7 +14,8 @@ def file_name_list():
     for path in mdfiles:
         file = os.path.splitext(path)[0]
         mdfile_list.append(file)
-    return mdfile_list
+    mdfiles_list = sorted(mdfile_list)
+    return mdfiles_list
 
 def file_rename(before_title, after_title):
     mdfile = now_dir()
