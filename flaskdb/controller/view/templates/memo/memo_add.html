@@ -47,7 +47,8 @@
     <div class="btn-group" role="group">
       <div class="view_btn">
         <a class="btn btn-default" href="{{ url_for('app.index') }}">home</a> 
-        <a class="btn btn-default" href="{{ url_for('app.index') }}">delete</a>
+        <a class="btn btn-default" href="{{ url_for('app.index') }}"
+        onclick="return confirm('削除します。よろしいですか？')">delete</a>
       </div> 
     </div>
   </div>
