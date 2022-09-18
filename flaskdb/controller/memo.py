@@ -1,7 +1,9 @@
+from turtle import title
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for, Markup
 
 from flaskdb import apps, db, da
 from flaskdb.service.memoMDE import delete_md, write_md, read_md, read_edit_md
+from flaskdb.service.mainForm import file_rename
 
 memo_module = Blueprint("memo", __name__)
 
@@ -17,9 +19,12 @@ def memo_view(file):
 def memo_edit(file):
     content = read_edit_md(file)
     if request.method == "POST":
-      content = request.form["data"]    
-      write_md(content, file)
-      return render_template("memo/memo_edit.html", data=content, file=file)
+      content = request.form["data"] 
+      title = request.form["title"]
+      if title != file:
+        file_rename(file, title)
+      write_md(content, title)
+      return render_template("memo/memo_edit.html", data=content, file=title)
     else:
         return render_template("memo/memo_edit.html", data=content, file=file)
 

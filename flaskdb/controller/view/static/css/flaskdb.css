@@ -18,3 +18,22 @@
     width: 50%;
     margin: 10px;
 }
+
+.view_main{
+    display: flex;
+    justify-content: space-between;
+}
+
+.view_btn{
+    padding-top: 30px;    
+}
+
+.index_main{
+    display: flex;
+    justify-content: space-between;
+    /* width: 80%; */
+}
+
+.index_btn{
+    padding-top: 40px;    
+}
