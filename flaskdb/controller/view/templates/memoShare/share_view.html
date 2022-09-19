@@ -6,9 +6,6 @@
   <title>flaskdb | Index</title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="/static/css/flaskdb.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {{ easymde.css }}
-  {{ easymde.js }}
   <!-- A Sample Web-DB Application for DB-DESIGN lecture -->
   <!-- Copyright (C) 2022 Yasuhiro Hayashi -->
 {% endblock %}
@@ -42,8 +39,13 @@
 
 {% block content %}
 <div class="container">
-  <div class="page-header index_main">
-    <h1>Public Notes</h1>
+  <div class="page-header view_main">
+    <h1>View</h1>
+    <div class="btn-group" role="group">
+      <div class="view_btn">
+        <a class="btn btn-default" href="{{ url_for('share.share_index') }}">home</a> 
+      </div>   
+    </div>
   </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -59,43 +61,13 @@
       {% endfor %}
     {% endfor %}
   {% endif %}
-  {% if "username" in session %}
-  <p>Welcome, {{ session["username"] }}!</p>
-    <ul class="list-group list-group-flush">
-      {% for mdfile in mdfiles %}
-      <div class="list-group">
-        <form action="/memo" method="GET" class="list-group-item">
-          <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
-          <p>{{ mdfile.updated_at }}</p>
-          <p>{{ mdfile.user_name }}</p>
-            <div class="text-right">
-              {% if mdfile.user_name == session["username"] %}
-                <div class="btn-group" role="group">
-                  <section name="sel">
-                    <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile.file_name) }}">view</a>
-                      <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile.file_name, shared=mdfile.share) }}">edit</a>
-                      <a class="btn btn-default" href="{{ url_for('share.share_stop', file=mdfile.file_name) }}"
-                      onclick="return confirm('公開をやめます。よろしいですか？')" >stop</a>                    
-                  </section>
-                </div>
-              {% else %}
-                <div class="btn-group" role="group">
-                  <section name="sel">
-                    <a class="btn btn-default" href="{{ url_for('share.share_view', file=mdfile.file_name, username=mdfile.user_name) }}">view</a>                 
-                  </section>
-                </div>
-              {% endif %}
-            </div>
-        </form>
-        
-      </div>
-      {% else %}
-      投稿がありません
-      {% endfor %}
-      </ul>
+
+
+  {% if md %}
+  <h2>{{ file }}</h2>
+  {{ md }}
+  
   {% endif %}
-
-
 </div>
 {% endblock %}
 
@@ -104,3 +76,4 @@
 <script src="{{ bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap') }}"></script>
 <script src="/static/js/flaskdb.js"></script>
 {% endblock %}
+

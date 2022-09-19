@@ -130,3 +130,25 @@ class DataAccess:
             memo.append(memo)
         return memo_list
 
+    # search item data by itemname
+    def search_memo_by_user_and_file(self, user_name, file_name):
+        query = sql.SQL("""
+            SELECT id FROM \"files\" WHERE user_name = {username} AND file_name = {filename}
+        """).format(
+            username = sql.Literal(user_name),
+            filename = sql.Literal(file_name)
+        )
+        # self.show_sql(query)
+        results = self.execute(query, autocommit=True)
+        memo_list = []
+        for r in results:
+            memo = Memo()
+            memo.id = r[0]
+            memo.file_name = r[1]
+            memo.user_id = r[2]
+            memo.user_name = r[3]
+            memo.share = r[4]
+            memo.updated_at = r[5]
+            memo.append(memo)
+        return memo_list
+
