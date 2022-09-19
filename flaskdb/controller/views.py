@@ -16,7 +16,7 @@ app = Blueprint("app", __name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    mdfile_list = file_name_list()
+    mdfile_list = file_name_list("private")
     return render_template("index.html", mdfiles = mdfile_list)
 
 
