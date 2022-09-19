@@ -5,6 +5,7 @@ class Memo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     file_name = db.Column(db.String(64), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    user_name = db.Column(db.String(64), nullable=False)
     share = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):

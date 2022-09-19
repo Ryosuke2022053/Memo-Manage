@@ -62,7 +62,8 @@ def memo_delete(file):
 def memo_share(file):
     if not "username" in session:
         return redirect(url_for("auth:login"))
-    user = User.query.filter_by(username=session["username"]).first()
-    insert_memo(file, user.id)
+    username = session["username"]
+    user = User.query.filter_by(username=username).first()
+    insert_memo(file, user.id, username)
     return redirect(url_for("app.index"))
     
