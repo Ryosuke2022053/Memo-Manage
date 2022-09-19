@@ -1,33 +1,37 @@
 import os
+from flask import session
 
-from flaskdb.controller.auth import now
+def create_private_folder(username):
+        current_dir = os.getcwd()
+        mdfile = os.path.join(current_dir, 'flaskdb', 'article_private')
+        path = mdfile + '/' + username
+        if os.path.exists(path):
+            pass
+        else:
+            os.makedirs(path, exist_ok=True)
 
-def public_dir():
+
+def private_dir(username):
     current_dir = os.getcwd()
-    mdfile = os.path.join(current_dir, 'flaskdb', 'article_public')
+    mdfile = os.path.join(current_dir, 'flaskdb', 'article_private', username)
     return mdfile
 
-def private_dir():
-    current_dir = os.getcwd()
-    mdfile = os.path.join(current_dir, 'flaskdb', 'article_private')
-    return mdfile
 
-def file_name_list(now):
+def file_name_list():
     mdfile_list = []
-    if now == "public":
-        mdfile = public_dir()
-    else:
-        mdfile = private_dir()
+    username = session["username"]
+    mdfile = private_dir(username)
     mdfiles = os.listdir(mdfile)
     for path in mdfiles:
         file = os.path.splitext(path)[0]
         mdfile_list.append(file)
     mdfiles_list = sorted(mdfile_list)
     return mdfiles_list
+    
 
-def file_rename(before_title, after_title):
-    mdfile = public_dir()
-    before_file = public_dir() + '/' + before_title + '.md'
-    after_file = public_dir() + '/' + after_title + '.md' 
+def private_file_rename(before_title, after_title):
+    before_file = private_dir(session["username"]) + '/' + before_title + '.md'
+    after_file = private_dir(session["username"]) + '/' + after_title + '.md' 
     os.rename(before_file, after_file)
+
 

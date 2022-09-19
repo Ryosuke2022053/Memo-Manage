@@ -11,13 +11,23 @@ from flaskdb.controller.form.ItemForm import AddItemForm
 from flaskdb.service.mainService import file_name_list
 import os
 
+from flaskdb.service.memoService import select_memo, select_all_memo
+
 app = Blueprint("app", __name__)
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    mdfile_list = file_name_list("private")
-    return render_template("index.html", mdfiles = mdfile_list)
+    if not "username" in session:
+        flash("Log in is required.", "danger")
+        return redirect(url_for("auth.login"))
+
+    memo_list = select_all_memo()
+    memo_md = []
+    for num in range(len(memo_list)):
+        if session['username'] == memo_list[num].user_name:
+            memo_md.append(memo_list[num])
+    return render_template("index.html", mdfiles = memo_md)
 
 
 # This is a very danger method
