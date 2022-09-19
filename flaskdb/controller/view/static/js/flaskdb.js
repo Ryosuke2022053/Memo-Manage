@@ -1,7 +1,3 @@
-/*
- * A Sample Web-DB Application for DB-DESIGN lecture
- * Copyright (C) 2022 Yasuhiro Hayashi
- */
 $(function() {
   $("form").submit(function() {
     $(this).find(":submit").prop("disabled", true);

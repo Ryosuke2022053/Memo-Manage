@@ -1,7 +1,3 @@
-"""
-A Sample Web-DB Application for DB-DESIGN lecture
-Copyright (C) 2022 Yasuhiro Hayashi
-"""
 from flaskdb import apps
 
 if __name__ == "__main__":

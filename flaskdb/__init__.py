@@ -1,7 +1,3 @@
-"""
-A Sample Web-DB Application for DB-DESIGN lecture
-Copyright (C) 2022 Yasuhiro Hayashi
-"""
 from flask import Flask
 apps = Flask(__name__, static_folder="controller/view/static", template_folder="controller/view/templates")
 apps.config.from_object("flaskdb.config")

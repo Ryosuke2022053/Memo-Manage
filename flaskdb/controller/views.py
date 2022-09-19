@@ -1,7 +1,3 @@
-"""
-A Sample Web-DB Application for DB-DESIGN lecture
-Copyright (C) 2022 Yasuhiro Hayashi
-"""
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for
 
 from flaskdb import apps, db, da

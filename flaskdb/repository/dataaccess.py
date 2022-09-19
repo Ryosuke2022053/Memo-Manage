@@ -1,7 +1,3 @@
-"""
-A Sample Web-DB Application for DB-DESIGN lecture
-Copyright (C) 2022 Yasuhiro Hayashi
-"""
 from typing import Literal
 from psycopg2 import sql, connect, ProgrammingError
 import flaskdb.var as v

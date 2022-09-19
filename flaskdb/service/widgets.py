@@ -1,7 +1,3 @@
-"""
-A Sample Web-DB Application for DB-DESIGN lecture
-Copyright (C) 2022 Yasuhiro Hayashi
-"""
 from wtforms import StringField
 from wtforms.widgets import html_params
 from markupsafe import Markup
