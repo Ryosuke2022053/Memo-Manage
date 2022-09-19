@@ -78,10 +78,11 @@
       {% for mdfile in mdfiles %}
       <div class="list-group">
         <form action="/memo" method="GET" class="list-group-item">
-          <div class="share_main">
             {% if mdfile.share == 1 %}
-            <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
-            <p>shared</p>
+            <div class="share_main">
+              <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
+              <p>shared</p>
+            </div>
               <div class="text-right">
                   <div class="btn-group" role="group">
                     <section name="sel">
@@ -95,7 +96,8 @@
                   </div>
               </div>
             {% else %}
-            <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
+            <div class="share_main">
+              <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
               <div class="text-right">
                   <div class="btn-group" role="group">
                     <section name="sel">
@@ -108,8 +110,8 @@
                     </section>
                   </div>
               </div>
-            {% endif %}
             </div>
+            {% endif %}
         </form>
       </div>
       {% else %}

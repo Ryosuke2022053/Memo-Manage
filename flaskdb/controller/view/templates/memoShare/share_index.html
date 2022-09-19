@@ -43,7 +43,14 @@
 {% block content %}
 <div class="container">
   <div class="page-header index_main navbar-fixed-top header_pd" >
-    <h1>Public Notes</h1>
+    <h1>Share Notes</h1>
+    {% if "username" in session %}
+    <div class="btn-group" role="group">
+      <div class="index_btn">
+        <a class="btn btn-default" href="{{ url_for('memo.memo_add') }}">add</a>            
+      </div>            
+    </div>
+    {% endif %}
   </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -60,50 +67,41 @@
     {% endfor %}
   {% endif %}
   {% if "username" in session %}
+  <!-- <p>Welcome, {{ session["username"] }}!</p> -->
     <ul class="list-group list-group-flush fix">
       <p>Welcome, {{ session["username"] }}!</p>
       {% for mdfile in mdfiles %}
-      <div class="list-group">
+      <div class="list-group  ">
         <form action="/memo" method="GET" class="list-group-item share_btm">
           <div class="share_main">
             <div>
               <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
-              <p>{{ mdfile.updated_at }}</p>
+              <p>UserName : {{ mdfile.user_name }}</p>
             </div>
             <div>
-              <p>{{ mdfile.user_name }}</p>
-              <div class="text-right">
-              {% if mdfile.user_name == session["username"] %}
-                <div class="btn-group" role="group">
-                  <section name="sel">
-                    <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile.file_name) }}">view</a>
-                      <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile.file_name) }}">edit</a>
-                      <a class="btn btn-default" href="{{ url_for('share.share_stop', file=mdfile.file_name) }}"
-                      onclick="return confirm('公開をやめます。よろしいですか？')" >stop</a>                    
-                  </section>
-                </div>
-              {% else %}
-                <div class="btn-group" role="group">
-                  <section name="sel">
-                    <a class="btn btn-default" href="{{ url_for('share.share_view', file=mdfile.file_name, username=mdfile.user_name) }}">view</a>                 
-                  </section>
-                </div>
-              {% endif %}
+              <p>Update : {{ mdfile.updated_at }}</p>
+              <div class="text-right ">
+                  <div class="btn-group " role="group">
+                    <section name="sel">
+                      <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile) }}">view</a>
+                      {% if mdfile.user_name == session["username"] %}
+                        <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile) }}">edit</a>
+                        <a class="btn btn-default" href="{{ url_for('memo.memo_share', file=mdfile) }}">share</a>
+                        <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=mdfile) }}"
+                        onclick="return confirm('削除します。よろしいですか？')" >delete</a>
+                      {% endif %}
+                    </section>
+                  </div>
+              </div>
             </div>
-            </div> 
-            
           </div>
-          
-        </form>
-        
+        </form>        
       </div>
       {% else %}
       投稿がありません
       {% endfor %}
       </ul>
   {% endif %}
-
-
 </div>
 {% endblock %}
 
