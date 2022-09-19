@@ -27,7 +27,7 @@ def memo_edit(file):
         # ファイル名変更チェック
         if title != file:
             # 重複チェック
-            mdfile_list = file_name_list()
+            mdfile_list = file_name_list("private")
             if title in mdfile_list:
                 memo_MDE(file).write_md(content)
                 return render_template("memo/memo_edit.html", data=content, file=file, errortext = True)    
@@ -44,7 +44,7 @@ def memo_add():
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["data"] 
-        mdfile_list = file_name_list()
+        mdfile_list = file_name_list("private")
         if title in mdfile_list:
             return render_template("memo/memo_add.html", data=content, file="", errortext = True)
         memo_MDE(title).write_md(content)
@@ -58,11 +58,10 @@ def memo_delete(file):
     memo_MDE(file).delete_md()
     return redirect(url_for("app.index"))
 
-@memo_module.route("/share/<string:file>", methods=["GET"])
+@memo_module.route("/public/<string:file>", methods=["GET"])
 def memo_share(file):
     if not "username" in session:
-        return redirect(url_for("auth:login"))
-    user = User.query.filter_by(username=session["username"]).first()
-    insert_memo(file, user.id)
+        return redirect(url_for("auth.login"))
+    insert_memo(file)
     return redirect(url_for("app.index"))
     

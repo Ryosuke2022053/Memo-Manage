@@ -2,10 +2,11 @@
 A Sample Web-DB Application for DB-DESIGN lecture
 Copyright (C) 2022 Yasuhiro Hayashi
 """
+from typing import Literal
 from psycopg2 import sql, connect, ProgrammingError
 import flaskdb.var as v
 from flaskdb.model.itemModel import Item
-# from flaskdb.model.memoModel import Memo
+from flaskdb.model.memoModel import Memo
 
 
 class DataAccess:
@@ -96,12 +97,36 @@ class DataAccess:
             tablename = sql.Identifier("files"),
             fields = sql.SQL(", ").join([
                 sql.Identifier("file_name"),
-                sql.Identifier("share")
+                sql.Identifier("user_name"),
+                sql.Identifier("share"),
+                sql.Identifier("updated_at")
             ]),
             values = sql.SQL(", ").join([
                 sql.Literal(memo.file_name),
-                sql.Literal(memo.share)
+                sql.Literal(memo.user_name),
+                sql.Literal(memo.share),
+                sql.Literal(memo.updated_at)
             ])
         )
         self.execute(query, autocommit=True)
+
+
+    # search item data by itemname
+    def search_items_by_itemname(self):
+        query = sql.SQL("""
+            SELECT (id, files_name, user_id, share, updated_at) FROM \"files\" WHERE share = 1
+        """)
+        # self.show_sql(query)
+        results = self.execute(query, autocommit=True)
+        memo_list = []
+        for r in results:
+            memo = Memo()
+            memo.id = r[0]
+            memo.file_name = r[1]
+            memo.user_id = r[2]
+            memo.user_name = r[3]
+            memo.share = r[4]
+            memo.updated_at = r[5]
+            memo.append(memo)
+        return memo_list
 

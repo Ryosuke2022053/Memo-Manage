@@ -42,15 +42,15 @@
 
 {% block content %}
 <div class="container">
-  <div class="page-header view_main">
-    <h1>Add</h1>
+  <div class="page-header index_main">
+    <h1>Share Notes</h1>
+    {% if "username" in session %}
     <div class="btn-group" role="group">
-      <div class="view_btn">
-        <a class="btn btn-default" href="{{ url_for('app.index') }}">home</a> 
-        <a class="btn btn-default" href="{{ url_for('app.index') }}"
-        onclick="return confirm('削除します。よろしいですか？')">delete</a>
-      </div> 
+      <div class="index_btn">
+        <a class="btn btn-default" href="{{ url_for('memo.memo_add') }}">add</a>            
+      </div>            
     </div>
+    {% endif %}
   </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -66,31 +66,38 @@
       {% endfor %}
     {% endfor %}
   {% endif %}
+  {% if "username" in session %}
+  <p>Welcome, {{ session["username"] }}!</p>
+    <ul class="list-group list-group-flush">
+      {% for mdfile in mdfiles %}
+      <div class="list-group">
+        <form action="/memo" method="GET" class="list-group-item">
+          <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
+          <p>{{ mdfile.updated_at }}</p>
+          <p>{{ mdfile.user_name }}</p>
+            <div class="text-right">
+                <div class="btn-group" role="group">
+                  <section name="sel">
+                    <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile) }}">view</a>
+                    {% if mdfile.user_name == session["username"] %}
+                      <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile) }}">edit</a>
+                      <a class="btn btn-default" href="{{ url_for('memo.memo_share', file=mdfile) }}">share</a>
+                      <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=mdfile) }}"
+                      onclick="return confirm('削除します。よろしいですか？')" >delete</a>
+                    {% endif %}
+                  </section>
+                </div>
+            </div>
+        </form>
+        
+      </div>
+      {% else %}
+      投稿がありません
+      {% endfor %}
+      </ul>
+  {% endif %}
 
-  <div class="edit_main">
-    <!-- Markdown Content -->
 
-    <div class = "markdown_content">
-        {% if data %}
-            {{ data|markdown }}
-        {% endif %}
-    </div>
-    
-    <!-- Markdown Editor -->
-    <form action="{{ url_for('memo.memo_add') }}" method="post" class="markdown_editor">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        {% if errortext %}
-          <p>ファイル名が重複しています。<br>まだ保存されていません。</p>
-        {% endif %}
-        <div>
-          <label for="content">File Name</label>
-          <input type="text" name="title" value="{{ file }}" required>
-          <textarea type="text" name="data" id="data">{% if data %}{{ data }}{% endif %}</textarea>
-          {{ easymde.load_id("data") }}
-        </div>
-        <button type="submit">Save</button>
-    </form>
-</div>
 </div>
 {% endblock %}
 
