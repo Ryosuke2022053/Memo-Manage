@@ -1,0 +1,104 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flaskdb | Index</title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/css/flaskdb.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{ easymde.css }}
+  {{ easymde.js }}
+  <!-- A Sample Web-DB Application for DB-DESIGN lecture -->
+  <!-- Copyright (C) 2022 Yasuhiro Hayashi -->
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Notes</a>
+    </div>
+    <div class="navbar-collapse collapse"> 
+      <ul class="nav navbar-nav">
+        {% if not "username" in session %}
+        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+        {% else %}
+        <li><a href="{{ url_for('app.index') }}">Private Notes</a></li>
+        <li><a href="{{ url_for('share.share_index') }}">Public Notes</a></li>
+        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header index_main">
+    <h1>Share Notes</h1>
+    {% if "username" in session %}
+    <div class="btn-group" role="group">
+      <div class="index_btn">
+        <a class="btn btn-default" href="{{ url_for('memo.memo_add') }}">add</a>            
+      </div>            
+    </div>
+    {% endif %}
+  </div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}"> {{ message|capitalize }} </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% if form %}
+    {% for field in form.errors %}
+      {% for error in form.errors[field] %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endfor %}
+    {% endfor %}
+  {% endif %}
+  {% if "username" in session %}
+  <p>Welcome, {{ session["username"] }}!</p>
+    <ul class="list-group list-group-flush">
+      {% for mdfile in mdfiles %}
+      <div class="list-group">
+        <form action="/memo" method="GET" class="list-group-item">
+          <h4 class="list-group-item-heading">{{ mdfile }}</h4>
+            <div class="text-right">
+                <div class="btn-group" role="group">
+                  <section name="sel">
+                    <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile) }}">view</a>
+                    <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile) }}">edit</a>
+                    <a class="btn btn-default" href="{{ url_for('memo.memo_share', file=mdfile) }}">share</a>
+                    <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=mdfile) }}"
+                    onclick="return confirm('削除します。よろしいですか？')" >delete</a>
+                  </section>
+                </div>
+            </div>
+        </form>
+        
+      </div>
+      {% else %}
+      投稿がありません
+      {% endfor %}
+      </ul>
+  {% endif %}
+
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ bootstrap_find_resource('jquery.js', cdn='jquery') }}"></script>
+<script src="{{ bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap') }}"></script>
+<script src="/static/js/flaskdb.js"></script>
+{% endblock %}
