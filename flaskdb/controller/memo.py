@@ -1,19 +1,19 @@
-from crypt import methods
-from turtle import title
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for, Markup
 
-from flaskdb import apps, db, da
-from flaskdb.model.userModel import User
+import shutil
 from flaskdb.service.memoMDE import memo_MDE
-from flaskdb.model.memoModel import Memo
-from flaskdb.service.mainService import file_rename, file_name_list
-from flaskdb.service.memoService import insert_memo
+from flaskdb.service.mainService import file_rename, file_name_list, private_dir, public_dir
+from flaskdb.service.memoService import insert_memo, select_memo
 
 memo_module = Blueprint("memo", __name__)
 
 
 @memo_module.route("/view/<string:file>", methods=["GET"])
 def memo_view(file):
+    if not "username" in session:
+        flash("Log in is required.", "danger")
+        return redirect(url_for("auth.login"))
+
     content = memo_MDE(file).read_md()
     return render_template('memo/memo_view.html', md=content, file=file)
 
@@ -62,6 +62,14 @@ def memo_delete(file):
 def memo_share(file):
     if not "username" in session:
         return redirect(url_for("auth.login"))
+
+    memo_list = select_memo()
+    username = session["username"]
+    for memo in memo_list:
+        if username == memo.user_name and file == memo.file_name:
+            return redirect(url_for("app.index"))
+            
     insert_memo(file)
+    file_name = private_dir(session["username"]) + "/" + file + ".md"
+    shutil.copy2(  file_name, public_dir())
     return redirect(url_for("app.index"))
-    

@@ -49,7 +49,7 @@
 {% block content %}
 <div class="container">
   <div class="page-header index_main">
-    <h1>Notes</h1>
+    <h1>Private Notes</h1>
     {% if "username" in session %}
     <div class="btn-group" role="group">
       <div class="index_btn">
@@ -84,7 +84,8 @@
                   <section name="sel">
                     <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile) }}">view</a>
                     <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile) }}">edit</a>
-                    <a class="btn btn-default" href="{{ url_for('memo.memo_share', file=mdfile) }}">share</a>
+                    <a class="btn btn-default" href="{{ url_for('memo.memo_share', file=mdfile) }}"
+                    onclick="return confirm('公開します。よろしいですか？')">share</a>
                     <a class="btn btn-default" href="{{ url_for('memo.memo_delete', file=mdfile) }}"
                     onclick="return confirm('削除します。よろしいですか？')" >delete</a>
                   </section>
