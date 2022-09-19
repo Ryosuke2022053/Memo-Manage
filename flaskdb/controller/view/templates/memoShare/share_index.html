@@ -9,8 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {{ easymde.css }}
   {{ easymde.js }}
-  <!-- A Sample Web-DB Application for DB-DESIGN lecture -->
-  <!-- Copyright (C) 2022 Yasuhiro Hayashi -->
 {% endblock %}
 
 {% block navbar %}
@@ -66,41 +64,37 @@
       <div class="list-group">
         <form action="/memo" method="GET" class="list-group-item share_btm">
           <div class="share_main">
-            <div>
               <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
-              <p>{{ mdfile.updated_at }}</p>
-            </div>
-            <div>
-              <p>{{ mdfile.user_name }}</p>
-              <div class="text-right">
+              <p> Updated_at : {{ mdfile.updated_at }}</p>
+          </div>
+          <div class="share_main">
+            <p>Username : {{ mdfile.user_name }}</p>
+            <div class="text-right">
               {% if mdfile.user_name == session["username"] %}
-                <div class="btn-group" role="group">
-                  <section name="sel">
-                    <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile.file_name) }}">view</a>
-                      <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile.file_name) }}">edit</a>
-                      <a class="btn btn-default" href="{{ url_for('share.share_stop', file=mdfile.file_name) }}"
-                      onclick="return confirm('公開をやめます。よろしいですか？')" >stop</a>                    
-                  </section>
-                </div>
+              <div class="btn-group" role="group">
+                <section name="sel">
+                  <a class="btn btn-default" href="{{ url_for('memo.memo_view', file=mdfile.file_name) }}">view</a>
+                  <a class="btn btn-default" href="{{ url_for('memo.memo_edit', file=mdfile.file_name) }}">edit</a>
+                  <a class="btn btn-default" href="{{ url_for('share.share_stop', file=mdfile.file_name) }}"
+                    onclick="return confirm('公開をやめます。よろしいですか？')" >stop</a>                    
+                </section>
+              </div>
+              <!-- </div> -->
               {% else %}
-                <div class="btn-group" role="group">
-                  <section name="sel">
-                    <a class="btn btn-default" href="{{ url_for('share.share_view', file=mdfile.file_name, username=mdfile.user_name) }}">view</a>                 
-                  </section>
-                </div>
+              <div class="btn-group" role="group">
+                <section name="sel">
+                  <a class="btn btn-default" href="{{ url_for('share.share_view', file=mdfile.file_name, username=mdfile.user_name) }}">view</a>                 
+                </section>
+              </div>
               {% endif %}
             </div>
-            </div> 
-            
-          </div>
-          
-        </form>
-        
+          </div>   
+         </form>
       </div>
       {% else %}
       投稿がありません
       {% endfor %}
-      </ul>
+    </ul>
   {% endif %}
 
 

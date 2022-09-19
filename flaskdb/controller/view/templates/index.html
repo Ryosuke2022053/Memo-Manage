@@ -12,8 +12,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script> -->
   <link href="https://fonts.googleapis.com/earlyaccess/mplus1p.css" rel="stylesheet" type="text/css">
-  <!-- A Sample Web-DB Application for DB-DESIGN lecture -->
-  <!-- Copyright (C) 2022 Yasuhiro Hayashi -->
 {% endblock %}
 
 {% block navbar %}
@@ -33,8 +31,6 @@
         {% if not "username" in session %}
         <li><a href="{{ url_for('auth.login') }}">Login</a></li>
         {% else %}
-        <li><a href="{{ url_for('item.additem') }}">Add Item</a></li>
-        <li><a href="{{ url_for('item.searchitem') }}">Search Item</a></li>
         <li><a href="{{ url_for('app.index') }}">Private Notes</a></li>
         <li><a href="{{ url_for('share.share_index') }}">Public Notes</a></li>
         
@@ -78,10 +74,11 @@
       {% for mdfile in mdfiles %}
       <div class="list-group">
         <form action="/memo" method="GET" class="list-group-item">
-          <div class="share_main">
             {% if mdfile.share == 1 %}
-            <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
-            <p>shared</p>
+            <div class="share_main">
+              <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
+              <p>shared</p>
+            </div>
               <div class="text-right">
                   <div class="btn-group" role="group">
                     <section name="sel">
@@ -95,7 +92,8 @@
                   </div>
               </div>
             {% else %}
-            <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
+            <div class="share_main">
+              <h4 class="list-group-item-heading">{{ mdfile.file_name }}</h4>
               <div class="text-right">
                   <div class="btn-group" role="group">
                     <section name="sel">
@@ -108,8 +106,8 @@
                     </section>
                   </div>
               </div>
-            {% endif %}
             </div>
+            {% endif %}
         </form>
       </div>
       {% else %}

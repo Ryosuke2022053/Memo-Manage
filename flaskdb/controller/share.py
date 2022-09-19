@@ -23,5 +23,4 @@ def share_view(file, username):
 def share_stop(file):
     update_memo(file, 0)
     return redirect(url_for('share.share_index'))
-
-    
+   

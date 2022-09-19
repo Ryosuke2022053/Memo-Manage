@@ -54,3 +54,14 @@
 .fix{
     padding-top: 180px;
 }
+
+
+.share_name{
+    justify-content: flex-end;
+    background-color: aquamarine;
+}
+.share_main2{
+    display: flex;
+    justify-content: space-between;
+    background-color: red;
+}
