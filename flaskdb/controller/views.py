@@ -16,6 +16,10 @@ app = Blueprint("app", __name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    if not "username" in session:
+        flash("Log in is required.", "danger")
+        return redirect(url_for("auth.login"))
+
     mdfile_list = file_name_list("private")
     return render_template("index.html", mdfiles = mdfile_list)
 

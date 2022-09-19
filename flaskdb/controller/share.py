@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, url_for
-from flaskdb.service.mainService import file_name_list
 from flaskdb.service.memoService import select_memo
 
 share_module = Blueprint("share", __name__)

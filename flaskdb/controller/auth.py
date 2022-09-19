@@ -3,6 +3,7 @@ from flaskdb import apps, db, da
 import datetime
 from flaskdb.model.userModel import User
 from flaskdb.controller.form.LoginForm import LoginForm
+from flaskdb.service.mainService import create_private_folder
 
 auth_module = Blueprint("auth", __name__)
 
@@ -24,6 +25,7 @@ def login():
             return redirect(url_for("auth.login"))
 
         session["username"] = user.username
+        create_private_folder(session["username"])
         return redirect(url_for("app.index"))
 
     return render_template("auth/login.html", form=form)
