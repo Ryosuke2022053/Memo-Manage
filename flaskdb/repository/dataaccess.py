@@ -5,7 +5,6 @@ Copyright (C) 2022 Yasuhiro Hayashi
 from typing import Literal
 from psycopg2 import sql, connect, ProgrammingError
 import flaskdb.var as v
-from flaskdb.model.itemModel import Item
 from flaskdb.model.memoModel import Memo
 
 
@@ -38,57 +37,6 @@ class DataAccess:
         with connect(self.dburl) as conn:
             print(query.as_string(conn))
 
-    # search item data
-    def search_items(self):
-        query = sql.SQL("""
-            SELECT * FROM \"items\"
-        """)
-        # self.show_sql(query)
-        results = self.execute(query, autocommit=True)
-        item_list = []
-        for r in results:
-            item = Item()
-            item.id = r[0]
-            item.user_id = r[1]
-            item.itemname = r[2]
-            item.price = r[3]
-            item_list.append(item)
-        return item_list
-
-    # search item data by itemname
-    def search_items_by_itemname(self, itemname):
-        query = sql.SQL("""
-            SELECT * FROM \"items\" WHERE itemname LIKE {itemname}
-        """).format(
-            itemname = sql.Literal(itemname)
-        )
-        # self.show_sql(query)
-        results = self.execute(query, autocommit=True)
-        item_list = []
-        for r in results:
-            item = Item()
-            item.id = r[0]
-            item.user_id = r[1]
-            item.itemname = r[2]
-            item.price = r[3]
-            item_list.append(item)
-        return item_list
-
-    def add_item(self, item):
-        query = sql.SQL("""
-            INSERT INTO \"items\" ( {fields} ) VALUES ( {values} )
-        """).format(
-            tablename = sql.Identifier("items"),
-            fields = sql.SQL(", ").join([
-                sql.Identifier("itemname"),
-                sql.Identifier("price")
-            ]),
-            values = sql.SQL(", ").join([
-                sql.Literal(item.itemname),
-                sql.Literal(item.price)
-            ])
-        )
-        self.execute(query, autocommit=True)
     
     def insert_memo(self, memo):
         query = sql.SQL("""
@@ -111,26 +59,6 @@ class DataAccess:
         self.execute(query, autocommit=True)
 
 
-    # search item data by itemname
-    def search_items_by_itemname(self):
-        query = sql.SQL("""
-            SELECT (id, files_name, user_id, share, updated_at) FROM \"files\" WHERE share = 1
-        """)
-        # self.show_sql(query)
-        results = self.execute(query, autocommit=True)
-        memo_list = []
-        for r in results:
-            memo = Memo()
-            memo.id = r[0]
-            memo.file_name = r[1]
-            memo.user_id = r[2]
-            memo.user_name = r[3]
-            memo.share = r[4]
-            memo.updated_at = r[5]
-            memo.append(memo)
-        return memo_list
-
-    # search item data by itemname
     def search_memo_by_user_and_file(self, user_name, file_name):
         query = sql.SQL("""
             SELECT id FROM \"files\" WHERE user_name = {username} AND file_name = {filename}
@@ -138,7 +66,6 @@ class DataAccess:
             username = sql.Literal(user_name),
             filename = sql.Literal(file_name)
         )
-        # self.show_sql(query)
         results = self.execute(query, autocommit=True)
         memo_list = []
         for r in results:

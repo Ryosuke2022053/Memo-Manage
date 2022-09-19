@@ -27,8 +27,6 @@
         {% if not "username" in session %}
         <li><a href="{{ url_for('.login') }}">Login</a></li>
         {% else %}
-        <li><a href="{{ url_for('item.additem') }}">Add Item</a></li>
-        <li><a href="{{ url_for('item.searchitem') }}">Search Item</a></li>
         <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
         {% endif %}
       </ul>

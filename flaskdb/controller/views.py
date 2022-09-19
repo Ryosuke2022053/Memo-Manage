@@ -5,11 +5,7 @@ Copyright (C) 2022 Yasuhiro Hayashi
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for
 
 from flaskdb import apps, db, da
-from flaskdb.model.itemModel import Item
 from flaskdb.model.userModel import User
-from flaskdb.controller.form.ItemForm import AddItemForm
-from flaskdb.service.mainService import file_name_list
-import os
 
 from flaskdb.service.memoService import select_memo, select_all_memo
 
@@ -55,24 +51,3 @@ def initdb():
     db.session.commit()
     return "initidb() method was executed. "
 
-
-@app.route("/nativesql", methods=["GET", "POST"])
-def nativesql():
-    if not "username" in session:
-        flash("Log in is required.", "danger")
-        return redirect(url_for("app.login"))
-
-    form = AddItemForm()
-
-    if form.validate_on_submit():
-        item = Item()
-        form.copy_to(item)
-        user = User.query.filter_by(username=session["username"]).first()
-        item.user_id = user.id
-        da.add_item(item)
-
-        flash("An item was added.", "info")
-        return redirect(url_for("app.additem"))
-
-    itemlist = da.search_items()
-    return render_template("additem.html", form=form, itemlist=itemlist)

@@ -33,8 +33,6 @@
         {% if not "username" in session %}
         <li><a href="{{ url_for('auth.login') }}">Login</a></li>
         {% else %}
-        <li><a href="{{ url_for('item.additem') }}">Add Item</a></li>
-        <li><a href="{{ url_for('item.searchitem') }}">Search Item</a></li>
         <li><a href="{{ url_for('app.index') }}">Private Notes</a></li>
         <li><a href="{{ url_for('share.share_index') }}">Public Notes</a></li>
         
