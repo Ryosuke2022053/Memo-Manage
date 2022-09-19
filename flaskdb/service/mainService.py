@@ -2,14 +2,22 @@ import os
 
 from flaskdb.controller.auth import now
 
-def now_dir():
+def public_dir():
     current_dir = os.getcwd()
-    mdfile = os.path.join(current_dir,'flaskdb','controller','view', 'article')
+    mdfile = os.path.join(current_dir, 'flaskdb', 'article_public')
     return mdfile
 
-def file_name_list():
+def private_dir():
+    current_dir = os.getcwd()
+    mdfile = os.path.join(current_dir, 'flaskdb', 'article_private')
+    return mdfile
+
+def file_name_list(now):
     mdfile_list = []
-    mdfile = now_dir()
+    if now == "public":
+        mdfile = public_dir()
+    else:
+        mdfile = private_dir()
     mdfiles = os.listdir(mdfile)
     for path in mdfiles:
         file = os.path.splitext(path)[0]
@@ -18,7 +26,8 @@ def file_name_list():
     return mdfiles_list
 
 def file_rename(before_title, after_title):
-    mdfile = now_dir()
-    before_file = now_dir() + '/' + before_title + '.md'
-    after_file = now_dir() + '/' + after_title + '.md' 
+    mdfile = public_dir()
+    before_file = public_dir() + '/' + before_title + '.md'
+    after_file = public_dir() + '/' + after_title + '.md' 
     os.rename(before_file, after_file)
+

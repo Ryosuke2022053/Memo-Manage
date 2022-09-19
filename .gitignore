@@ -1,3 +1,4 @@
 Pipfile.lock
-flaskdb/controller/view/article/
+flaskdb/article_public/*.md
+flaskdb/article_private/*.md
 controller/var.py
