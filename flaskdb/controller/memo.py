@@ -9,15 +9,14 @@ from flaskdb.service.memoService import insert_memo, select_memo, update_edit_me
 memo_module = Blueprint("memo", __name__)
 
 
-@memo_module.route("/view/<string:file>/<int:shared>", methods=["GET"])
-def memo_view(file, shared):
+@memo_module.route("/view/<string:file>", methods=["GET"])
+def memo_view(file):
     content = memo_MDE(file).read_md()
-    return render_template('memo/memo_view.html', md=content, file=file, shared=shared)
+    return render_template('memo/memo_view.html', md=content, file=file)
 
 
-@memo_module.route("/edit/<string:file>/<int:shared>", methods=["GET", "POST"])
-def memo_edit(file, shared):
-    print(shared)
+@memo_module.route("/edit/<string:file>", methods=["GET", "POST"])
+def memo_edit(file):
     content = memo_MDE(file).read_edit_md()
     if request.method == "POST":
         content = request.form["data"] 
@@ -28,14 +27,14 @@ def memo_edit(file, shared):
             mdfile_list = file_name_list()
             if title in mdfile_list:
                 memo_MDE(file).write_md(content)
-                return render_template("memo/memo_edit.html", data=content, file=file, errortext = True, shared=shared)    
+                return render_template("memo/memo_edit.html", data=content, file=file, errortext = True)    
             
             private_file_rename(file, title)
         memo_MDE(title).write_md(content)
         update_edit_memo(file, title)
-        return render_template("memo/memo_edit.html", data=content, file=title, shared=shared)
+        return render_template("memo/memo_edit.html", data=content, file=title)
     else:
-        return render_template("memo/memo_edit.html", data=content, file=file, shared=shared)
+        return render_template("memo/memo_edit.html", data=content, file=file)
 
 
 @memo_module.route("/add", methods=["GET", "POST"])

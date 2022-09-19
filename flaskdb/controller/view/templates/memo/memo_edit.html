@@ -77,7 +77,7 @@
         {% endif %}
     </div>
     <!-- Markdown Editor -->
-    <form action="{{ url_for('memo.memo_edit', file=file, shared=shared) }}" method="post" class="markdown_editor">
+    <form action="{{ url_for('memo.memo_edit', file=file) }}" method="post" class="markdown_editor">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       {% if errortext %}
         <p>ファイル名が重複しています。<br>まだ保存されていません。</p>
