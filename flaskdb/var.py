@@ -1,7 +1,7 @@
 DBTYPE = "postgresql"
 HOSTNAME = "127.0.0.1"
 PORT = 5432
-DBNAME = "user_database_name"
-USERNAME = "user_name"
-PASSWORD = "user_password"
+DBNAME = "flaskdb"
+USERNAME = "iryosuke"
+PASSWORD = "ryosuke8121"
 SHOW_SQL = True

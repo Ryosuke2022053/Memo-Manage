@@ -46,4 +46,3 @@ def initdb():
     db.session.add(user)
     db.session.commit()
     return "initidb() method was executed. "
-

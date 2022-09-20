@@ -33,5 +33,3 @@ def private_file_rename(before_title, after_title):
     before_file = private_dir(session["username"]) + '/' + before_title + '.md'
     after_file = private_dir(session["username"]) + '/' + after_title + '.md' 
     os.rename(before_file, after_file)
-
-
