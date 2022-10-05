@@ -75,7 +75,19 @@
     </div>
     
     <!-- Markdown Editor -->
-    <form action="{{ url_for('memo.memo_add') }}" method="post" class="markdown_editor">
+    <div class="markdown_editor">
+      <form action="{{ url_for('memo.uploads_file') }}" method = post enctype = multipart/form-data class="image_form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type=file name = file>
+        <input type = submit value = Upload>
+      </form>
+      {% if img|length != 0 %}
+        <p>{{ img }}</p>
+        <!-- {% for img_path in img %}
+          <p>{{ img_path }}</p>
+        {% endfor %} -->
+      {% endif %}
+      <form action="{{ url_for('memo.memo_add') }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         {% if errortext %}
           <p>ファイル名が重複しています。<br>まだ保存されていません。</p>
@@ -87,7 +99,9 @@
           {{ easymde.load_id("data") }}
         </div>
         <button type="submit">Save</button>
-    </form>
+      </form>
+    </div>
+    
 </div>
 </div>
 {% endblock %}

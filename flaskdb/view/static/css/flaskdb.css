@@ -73,3 +73,8 @@ th,td {
 table {
     border-collapse:  collapse; 
 }
+
+.image_form {
+    display: inline-flex;
+    padding-bottom: 10px;
+} 
