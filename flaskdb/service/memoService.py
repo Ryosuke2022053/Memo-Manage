@@ -24,7 +24,7 @@ def select_memo():
     return memo_list
 
 def select_all_memo():
-    memo_list = Memo.query.all()
+    memo_list = Memo.query.order_by(Memo.id.asc()).all()
     return memo_list
 
 def delete_memo(file):

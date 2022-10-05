@@ -65,3 +65,11 @@
     justify-content: space-between;
     background-color: red;
 }
+
+th,td {
+    border: solid 1px; 
+    padding: 10px;   
+}
+table {
+    border-collapse:  collapse; 
+}
