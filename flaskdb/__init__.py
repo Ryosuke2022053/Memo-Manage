@@ -1,5 +1,5 @@
 from flask import Flask
-apps = Flask(__name__, static_folder="controller/view/static", template_folder="controller/view/templates")
+apps = Flask(__name__, static_folder="view/static", template_folder="view/templates")
 apps.config.from_object("flaskdb.config")
 
 from flask_sqlalchemy import SQLAlchemy
