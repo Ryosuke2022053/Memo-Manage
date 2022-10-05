@@ -1,8 +1,10 @@
 from flask import Blueprint, request, session, render_template, redirect, flash, url_for, Markup
+from werkzeug.utils import secure_filename
+import sys
 
 from flaskdb.service.memoMDE import memo_MDE
-from flaskdb.service.mainService import file_name_list, private_dir, private_file_rename
-from flaskdb.service.memoService import insert_memo, select_memo, update_edit_memo, update_memo, delete_memo
+from flaskdb.service.mainService import catch_img, file_name_list, private_dir, private_file_rename, private_image_dir
+from flaskdb.service.memoService import allowed_file, insert_memo, select_memo, update_edit_memo, update_memo, delete_memo
 
 memo_module = Blueprint("memo", __name__)
 
@@ -48,17 +50,19 @@ def memo_add():
     if not "username" in session:
         flash("Log in is required.", "danger")
         return redirect(url_for("auth.login"))
+    session['now_url'] = "memo.memo_add"
+    img_list = catch_img(session['username'])
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["data"] 
         mdfile_list = file_name_list()
         if title in mdfile_list:
-            return render_template("memo/memo_add.html", data=content, file="", errortext = True)
+            return render_template("memo/memo_add.html", data=content, file="", errortext = True, img=img_list)
         insert_memo(title, 0)
         memo_MDE(title).write_md(content)
         return redirect(url_for("app.index"))
     else:
-        return render_template("memo/memo_add.html", file="")
+        return render_template("memo/memo_add.html", file="", img=img_list)
 
 
 @memo_module.route("/delete/<string:file>", methods=["GET"])
@@ -86,3 +90,22 @@ def memo_share(file):
 def memo_stop(file):
     update_memo(file, 0)
     return redirect(url_for('app.index'))
+
+
+@memo_module.route("/upload_file", methods=["POST"])
+def uploads_file():
+    back_url = session["now_url"]
+    print(back_url)
+    session["now_url"] = ""
+    if 'file' not in request.files:
+        flash('ファイルがありません')
+        return redirect(back_url)
+    file = request.files["file"]
+    if file.filename == '':
+        flash('ファイルがありません')
+        return redirect(url_for(back_url))
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(private_image_dir(session["username"]) + "/" + filename)
+        return redirect(url_for(back_url))
+
