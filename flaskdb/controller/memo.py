@@ -97,7 +97,6 @@ def memo_stop(file):
 @memo_module.route("/upload_file", methods=["POST"])
 def uploads_file():
     back_url = session["now_url"]
-    print(back_url)
     session["now_url"] = ""
     if 'file' not in request.files:
         flash('ファイルがありません')
