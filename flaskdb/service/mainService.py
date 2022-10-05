@@ -3,12 +3,14 @@ from flask import session
 
 def create_private_folder(username):
         current_dir = os.getcwd()
-        mdfile = os.path.join(current_dir, 'flaskdb', 'article_private')
-        path = mdfile + '/' + username
-        if os.path.exists(path):
-            pass
-        else:
-            os.makedirs(path, exist_ok=True)
+        dir_list = [[current_dir,'flaskdb', 'article_private'], [current_dir,'flaskdb', 'controller', 'view', 'static', 'attachments']]
+        for dir in dir_list:
+            mdfile = os.path.join(*dir)
+            path = mdfile + '/' + username
+            if os.path.exists(path):
+                pass
+            else:
+                os.makedirs(path, exist_ok=True)
 
 
 def private_dir(username):
