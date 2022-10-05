@@ -2,3 +2,4 @@ Pipfile.lock
 flaskdb/article_public/*.md
 flaskdb/article_private/
 controller/var.py
+flaskdb/controller/view/static/attachments/
