@@ -15,9 +15,6 @@ def now():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        print(form.username.data)
-        print(form.password.data)
-
         user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
 
         if user is None or user.password != form.password.data:

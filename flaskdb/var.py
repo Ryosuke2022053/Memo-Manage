@@ -4,4 +4,4 @@ PORT = 5432
 DBNAME = "flaskdb"
 USERNAME = "iryosuke"
 PASSWORD = "ryosuke8121"
-SHOW_SQL = True
+SHOW_SQL = False
