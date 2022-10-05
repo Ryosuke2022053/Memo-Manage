@@ -48,5 +48,5 @@ def catch_img(username):
     img_list = []
     for img in glob(img_path +  '/*'):
         img_name = os.path.basename(img)
-        img_list.append('/static/img/'+ username + img_name)
+        img_list.append('/static/img/'+ username + '/' + img_name)
     return ", ".join(img_list)

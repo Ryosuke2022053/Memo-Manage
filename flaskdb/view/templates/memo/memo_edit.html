@@ -75,7 +75,16 @@
         {% endif %}
     </div>
     <!-- Markdown Editor -->
-    <form action="{{ url_for('memo.memo_edit', file=file) }}" method="post" class="markdown_editor">
+    <div class="markdown_editor">
+      <form action="{{ url_for('memo.uploads_file') }}" method = post enctype = multipart/form-data class="image_form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type=file name = file>
+        <input type = submit value = Upload onclick="return confirm('テキストのsaveはしましたか？')">
+      </form>
+      {% if img|length != 0 %}
+        <p>{{ img }}</p>
+      {% endif %}
+      <form action="{{ url_for('memo.memo_edit', file=file) }}" method="post">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       {% if errortext %}
         <p>ファイル名が重複しています。<br>まだ保存されていません。</p>
@@ -88,6 +97,8 @@
       </div>
         <button type="submit">Save</button>
     </form>
+    </div>
+    
 </div>
 </div>
 {% endblock %}

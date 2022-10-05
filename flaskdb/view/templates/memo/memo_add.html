@@ -79,13 +79,10 @@
       <form action="{{ url_for('memo.uploads_file') }}" method = post enctype = multipart/form-data class="image_form">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <input type=file name = file>
-        <input type = submit value = Upload>
+        <input type = submit value = Upload onclick="return confirm('テキストのsaveはしましたか？')">
       </form>
       {% if img|length != 0 %}
         <p>{{ img }}</p>
-        <!-- {% for img_path in img %}
-          <p>{{ img_path }}</p>
-        {% endfor %} -->
       {% endif %}
       <form action="{{ url_for('memo.memo_add') }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
