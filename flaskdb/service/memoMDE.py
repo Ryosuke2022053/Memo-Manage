@@ -18,12 +18,12 @@ class memo_MDE:
   def read_md(self) -> str:
     with open(private_dir(self.username) + '/' + self.mdfile + '.md', mode='r') as mdfile:
       mdcontent = mdfile.read()
-      return Markup(markdown(mdcontent))
+      return Markup(markdown(mdcontent, extensions=['tables']))
 
   def read_edit_md(self) -> str:
     with open(private_dir(self.username) + '/' + self.mdfile + '.md', mode='r') as mdfile:
       mdcontent = mdfile.read()
-      return mdcontent
+      return mdcontent, Markup(markdown(mdcontent, extensions=['tables']))
   
   def delete_md(self):
     os.remove(private_dir(self.username) + '/' + self.mdfile + '.md')
