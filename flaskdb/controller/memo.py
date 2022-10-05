@@ -9,12 +9,18 @@ memo_module = Blueprint("memo", __name__)
 
 @memo_module.route("/view/<string:file>", methods=["GET"])
 def memo_view(file):
+    if not "username" in session:
+        flash("Log in is required.", "danger")
+        return redirect(url_for("auth.login"))
     content = memo_MDE(file).read_md()
     return render_template('memo/memo_view.html', md=content, file=file)
 
 
 @memo_module.route("/edit/<string:file>", methods=["GET", "POST"])
 def memo_edit(file):
+    if not "username" in session:
+        flash("Log in is required.", "danger")
+        return redirect(url_for("auth.login"))
     if request.method == "POST":
         content = request.form["data"] 
         title = request.form["title"]
@@ -39,6 +45,9 @@ def memo_edit(file):
 
 @memo_module.route("/add", methods=["GET", "POST"])
 def memo_add():
+    if not "username" in session:
+        flash("Log in is required.", "danger")
+        return redirect(url_for("auth.login"))
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["data"] 

@@ -16,6 +16,9 @@ def share_index():
 
 @share_module.route("/share/view/<string:file>/<string:username>", methods=["GET"])
 def share_view(file, username):
+    if not "username" in session:
+        flash("Log in is required.", "danger")
+        return redirect(url_for("auth.login"))
     content = share_read_md(username, file)
     return render_template('memoShare/share_view.html', md=content, file=file)
 
