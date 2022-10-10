@@ -11,7 +11,7 @@ app = Blueprint("app", __name__)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if not "username" in session:
-        flash("Log in is required.", "danger")
+        flash("もう一度ログインしてください。", "danger")
         return redirect(url_for("auth.login"))
 
     memo_list = select_all_memo()

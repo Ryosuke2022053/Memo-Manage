@@ -18,7 +18,7 @@ def login():
         user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
 
         if user is None or user.password != form.password.data:
-            flash("Username or Password is incorrect.", "danger")
+            flash("ユーザー名あるいはパスワードが違います。", "danger")
             return redirect(url_for("auth.login"))
 
         session["username"] = user.username
@@ -31,5 +31,5 @@ def login():
 def logout():
     session.pop("username", None)
     session.clear()
-    flash("You have been logged out.", "info")
+    flash("既にログアウト済みです。", "info")
     return redirect(url_for("app.index"))

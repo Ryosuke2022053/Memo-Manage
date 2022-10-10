@@ -1,5 +1,5 @@
 Pipfile.lock
-flaskdb/article_public/*.md
+flaskdb/view/static/article/
 flaskdb/article_private/
 controller/var.py
-flaskdb/controller/view/static/attachments/
+flaskdb/view/static/img/

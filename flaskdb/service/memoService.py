@@ -42,3 +42,9 @@ def update_edit_memo(file, title):
     memo.updated_at = datetime.datetime.now()
     memo.file_name = title
     db.session.commit()
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif'])
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

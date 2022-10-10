@@ -5,20 +5,20 @@ from flaskdb.service.widgets import ButtonField
 
 class LoginForm(FlaskForm):
     username = StringField(
-        "User Name",
+        "ユーザー名",
         validators = [
-            DataRequired(message="User Name is required."),
-            length(max=64, message="User Name should be input within 64 characters."),
+            DataRequired(message="ユーザー名は必要です。"),
+            length(max=64, message="ユーザー名は64文字以内にしてください。"),
         ],
     )
     password = PasswordField(
-        "Password",
+        "パスワード",
         validators = [
-            DataRequired(message="Password is required."),
+            DataRequired(message="パスワードは必要です。"),
         ],
     )
-    cancel = ButtonField("Cancel")
-    submit = SubmitField("Login")
+    cancel = ButtonField("キャンセル")
+    submit = SubmitField("ログイン")
 
     def copy_from(self, user):
         self.username.data = user.username
