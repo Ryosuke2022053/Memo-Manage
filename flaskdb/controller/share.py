@@ -8,7 +8,7 @@ share_module = Blueprint("share", __name__)
 @share_module.route("/share")
 def share_index():
     if not "username" in session:
-        flash("Log in is required.", "danger")
+        flash("もう一度ログインしてください。", "danger")
         return redirect(url_for("auth.login"))
 
     memo_list = select_memo()
@@ -17,7 +17,7 @@ def share_index():
 @share_module.route("/share/view/<string:file>/<string:username>", methods=["GET"])
 def share_view(file, username):
     if not "username" in session:
-        flash("Log in is required.", "danger")
+        flash("もう一度ログインしてください。", "danger")
         return redirect(url_for("auth.login"))
     content = share_read_md(username, file)
     return render_template('memoShare/share_view.html', md=content, file=file)
