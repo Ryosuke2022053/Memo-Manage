@@ -12,7 +12,7 @@ memo_module = Blueprint("memo", __name__)
 @memo_module.route("/view/<string:file>", methods=["GET"])
 def memo_view(file):
     if not "username" in session:
-        flash("Log in is required.", "danger")
+        flash("もう一度ログインしてください。", "danger")
         return redirect(url_for("auth.login"))
     content = memo_MDE(file).read_md()
     return render_template('memo/memo_view.html', md=content, file=file)
@@ -21,7 +21,7 @@ def memo_view(file):
 @memo_module.route("/edit/<string:file>", methods=["GET", "POST"])
 def memo_edit(file):
     if not "username" in session:
-        flash("Log in is required.", "danger")
+        flash("もう一度ログインしてください。", "danger")
         return redirect(url_for("auth.login"))
     session['now_url'] = request.url
     img_list = catch_img(session['username'])
@@ -50,7 +50,7 @@ def memo_edit(file):
 @memo_module.route("/add", methods=["GET", "POST"])
 def memo_add():
     if not "username" in session:
-        flash("Log in is required.", "danger")
+        flash("もう一度ログインしてください。", "danger")
         return redirect(url_for("auth.login"))
     session['now_url'] = request.url
     img_list = catch_img(session['username'])
