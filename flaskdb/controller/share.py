@@ -1,6 +1,6 @@
 from crypt import methods
 from flask import Blueprint, render_template, url_for, session, flash, redirect
-from flaskdb.service.memoService import delete_memo, select_memo, update_memo
+from flaskdb.service.filesService import delete_files, select_files, update_files
 from flaskdb.service.shareMDE import share_read_md
 
 share_module = Blueprint("share", __name__)
@@ -11,7 +11,7 @@ def share_index():
         flash("もう一度ログインしてください。", "danger")
         return redirect(url_for("auth.login"))
 
-    memo_list = select_memo()
+    memo_list = select_files()
     return render_template('memoShare/share_index.html', mdfiles = memo_list)
 
 @share_module.route("/share/view/<string:file>/<string:username>", methods=["GET"])
@@ -24,6 +24,6 @@ def share_view(file, username):
 
 @share_module.route("/share/stop/<string:file>", methods=["GET"])
 def share_stop(file):
-    update_memo(file, 0)
+    update_files(file, 0)
     return redirect(url_for('share.share_index'))
    

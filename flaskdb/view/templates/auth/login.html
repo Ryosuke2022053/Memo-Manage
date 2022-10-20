@@ -50,6 +50,8 @@
       {% endfor %}
     {% endfor %}
   {% endif %}
+  <p>【ID】admin</p>
+  <p>【password】password</p>
   <form action="{{ url_for('auth.login') }}" method="POST" novalidate class="mb-10">
     <div class="form-group">
       <label for="username">{{ form.username.label }}</label>

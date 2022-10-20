@@ -4,7 +4,7 @@ from flaskdb.model.userModel import User
 import datetime
 from flaskdb import db
 
-def insert_memo(file, num):
+def insert_files(file, num):
     memo = Memo()
     username = session["username"]
     user = User.query.filter_by(username=username).first()
@@ -16,28 +16,28 @@ def insert_memo(file, num):
     db.session.add(memo)
     db.session.commit()
 
-def select_memo():
+def select_files():
     memo_list = Memo.query.filter(Memo.share == 1).all()
     for i in range(len(memo_list)):
         days = memo_list[i].updated_at.strftime('%Y/%m/%d %H:%M')
         memo_list[i].updated_at = days
     return memo_list
 
-def select_all_memo():
+def select_all_files():
     memo_list = Memo.query.order_by(Memo.id.asc()).all()
     return memo_list
 
-def delete_memo(file):
+def delete_files(file):
     memo_id = Memo.query.filter(Memo.user_name == session["username"] , Memo.file_name == file).one()
     db.session.delete(memo_id)
     db.session.commit()
 
-def update_memo(file, num):
+def update_files(file, num):
     memo = Memo.query.filter(Memo.user_name == session["username"] , Memo.file_name == file).one()
     memo.share = num
     db.session.commit()
 
-def update_edit_memo(file, title):
+def update_edit_files(file, title):
     memo = Memo.query.filter(Memo.user_name == session["username"] , Memo.file_name == file).one()
     memo.updated_at = datetime.datetime.now()
     memo.file_name = title
