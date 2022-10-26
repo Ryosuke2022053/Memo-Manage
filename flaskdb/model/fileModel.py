@@ -1,7 +1,7 @@
 from flaskdb import db
 from sqlalchemy.dialects.postgresql import TIMESTAMP as Timestamp
 
-class Memo(db.Model):
+class File(db.Model):
     __tablename__ = "files"
     id = db.Column(db.Integer, primary_key=True)
     file_name = db.Column(db.String(64), nullable=False)

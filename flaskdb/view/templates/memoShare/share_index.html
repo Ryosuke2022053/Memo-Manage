@@ -40,7 +40,7 @@
 
 {% block content %}
 <div class="container">
-  <div class="page-header index_main navbar-fixed-top header_pd" >
+  <div class="page-header index_main" >
     <h1>公開メモ</h1>
   </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
@@ -58,7 +58,7 @@
     {% endfor %}
   {% endif %}
   {% if "username" in session %}
-    <ul class="list-group list-group-flush fix">
+    <ul class="list-group list-group-flush">
       <p>こんにちは, {{ session["username"] }}!</p>
       {% for mdfile in mdfiles %}
       <div class="list-group">

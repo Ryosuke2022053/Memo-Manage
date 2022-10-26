@@ -1,6 +1,6 @@
 from crypt import methods
 from flask import Blueprint, render_template, url_for, session, flash, redirect
-from flaskdb.service.filesService import delete_files, select_files, update_files
+from flaskdb.service.filesService import select_files, update_files
 from flaskdb.service.shareMDE import share_read_md
 
 share_module = Blueprint("share", __name__)
