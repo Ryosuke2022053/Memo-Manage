@@ -1,7 +1,7 @@
 from typing import Literal
 from psycopg2 import sql, connect, ProgrammingError
 import flaskdb.var as v
-from flaskdb.model.memoModel import Memo
+from flaskdb.model.fileModel import File
 
 
 class DataAccess:
@@ -65,7 +65,7 @@ class DataAccess:
         results = self.execute(query, autocommit=True)
         memo_list = []
         for r in results:
-            memo = Memo()
+            memo = File()
             memo.id = r[0]
             memo.file_name = r[1]
             memo.user_id = r[2]

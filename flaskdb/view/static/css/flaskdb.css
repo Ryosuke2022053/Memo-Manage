@@ -51,10 +51,6 @@
     background-color: white;    
 }
 
-.fix{
-    padding-top: 180px;
-}
-
 
 .share_name{
     justify-content: flex-end;
@@ -78,3 +74,4 @@ table {
     display: inline-flex;
     padding-bottom: 10px;
 } 
+

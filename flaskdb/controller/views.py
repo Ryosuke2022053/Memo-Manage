@@ -3,7 +3,7 @@ from flask import Blueprint, request, session, render_template, redirect, flash,
 from flaskdb import apps, db, da
 from flaskdb.model.userModel import User
 
-from flaskdb.service.memoService import select_memo, select_all_memo
+from flaskdb.service.filesService import insert_files, select_all_files
 
 app = Blueprint("app", __name__)
 
@@ -14,7 +14,7 @@ def index():
         flash("もう一度ログインしてください。", "danger")
         return redirect(url_for("auth.login"))
 
-    memo_list = select_all_memo()
+    memo_list = select_all_files()
     memo_md = []
     for num in range(len(memo_list)):
         if session['username'] == memo_list[num].user_name:
